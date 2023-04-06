@@ -1,5 +1,5 @@
 - name: Get running processes
-  shell: "ps -ef | grep -v grep | grep -w {{ server.py }} | awk '{print $2}'"
+  shell: "ps -ef | grep -v grep | grep -w server.py | awk '{print $2}'"
   register: running_processes
 
 - name: Kill running processes
