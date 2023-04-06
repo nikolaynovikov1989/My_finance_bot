@@ -1,7 +1,7 @@
 - name: copy files to server
   copy:
     src: '{{item}}'
-    dest: /home/bot/finanse_bot
+    dest: /home/bot/finanse_bot/
   loop:
     - createdb.sql
     - db.py
