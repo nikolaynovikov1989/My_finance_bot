@@ -1,4 +1,5 @@
 ---
 - hosts: app
+  sudo: yes
   roles:
     - update_bot
