@@ -36,7 +36,8 @@ def month_category():
     res = cur.execute("SELECT amount, category_codename from expense where created like ?", ('%' + str(month) + '%',))
     base_result = res.fetchall()
     for i in base_result:
-     return (i)
+        a = i
+    return (a)
 
 def get_today():
     con = sqlite3.connect("db.db")
