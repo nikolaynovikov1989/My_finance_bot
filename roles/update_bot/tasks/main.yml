@@ -29,5 +29,5 @@
     - expenses.py
     - main.py
     - server.py
-- name: stop service bot
+- name: start service bot
   service: name=test state=started
