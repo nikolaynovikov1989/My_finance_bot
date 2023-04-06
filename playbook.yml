@@ -1,6 +1,5 @@
 ---
 - hosts: app
   become: true
-  become_method: enable
   roles:
     - update_bot
