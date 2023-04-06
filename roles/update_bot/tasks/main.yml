@@ -1,4 +1,10 @@
 - name: copy files to server
   copy:
-    src: ./server.py
-    dest: /home/ansible_user
+    src: '{{item}}'
+    dest: /home/bot/finanse_bot
+  loop:
+    - createdb.sql
+    - db.py
+    - expenses.py
+    - main.py
+    - server.py
