@@ -28,4 +28,4 @@
     - main.py
     - server.py
 - name: run app
-  command: "chdir=/home/bot/finanse_bot nohup python3 server.py &"
+  shell: "nohup python /home/bot/finanse_bot/server.py > output.log &"
