@@ -1,22 +1,24 @@
-- name: Get running processes
-  shell: "ps -ef | grep -v grep | grep -w server.py | awk '{print $2}'"
-  register: running_processes
-
-- name: Kill running processes
-  shell: "kill {{ item }}"
-  with_items: "{{ running_processes.stdout_lines }}"
-  ignore_errors: yes
-
-- wait_for:
-    path: "/proc/{{ item }}/status"
-    state: absent
-  with_items: "{{ running_processes.stdout_lines }}"
-  ignore_errors: yes
-  register: killed_processes
-
-- name: Force kill stuck processes
-  shell: "kill -9 {{ item }}"
-  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+#- name: Get running processes
+#  shell: "ps -ef | grep -v grep | grep -w server.py | awk '{print $2}'"
+#  register: running_processes
+#
+#- name: Kill running processes
+#  shell: "kill {{ item }}"
+#  with_items: "{{ running_processes.stdout_lines }}"
+#  ignore_errors: yes
+#
+#- wait_for:
+#    path: "/proc/{{ item }}/status"
+#    state: absent
+#  with_items: "{{ running_processes.stdout_lines }}"
+#  ignore_errors: yes
+#  register: killed_processes
+#
+#- name: Force kill stuck processes
+#  shell: "kill -9 {{ item }}"
+#  with_items: "{{ killed_processes.results | select('failed') | map(attribute='item') | list }}"
+- name: stop service bot
+  service: name=test state=stopped
 - name: copy files to server
   copy:
     src: '{{item}}'
@@ -27,5 +29,5 @@
     - expenses.py
     - main.py
     - server.py
-- name: run app
-  shell: "nohup python /home/bot/finanse_bot/server.py > output.log &"
+- name: stop service bot
+  service: name=test state=started
