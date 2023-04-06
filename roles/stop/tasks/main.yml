@@ -1,2 +1,4 @@
 - name: stop service bot
-  service: name=test state=stopped
+  service:
+    name: test
+    state: stopped
