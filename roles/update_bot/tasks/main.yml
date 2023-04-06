@@ -1,0 +1,4 @@
+- name: copy files to server
+  copy:
+    src: ./server.py
+    dest: /home/ansible_user
