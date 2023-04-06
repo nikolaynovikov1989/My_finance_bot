@@ -1,0 +1,2 @@
+- name: start service bot
+  service: name=test state=started
