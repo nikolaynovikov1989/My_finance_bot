@@ -14,7 +14,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=['month', 'month_category', 'today',])
+@dp.message_handler(commands=['help'])
 async def send_welcome(message: types.Message):
     """
     This handler will be called when user sends `/start` or `/help` command
