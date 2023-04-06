@@ -1,5 +1,7 @@
 ---
 - hosts: app
   become: true
+  vars_files:
+    - ./1
   roles:
     - update_bot
