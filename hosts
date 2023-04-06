@@ -1,0 +1,5 @@
+[app]
+45.143.94.215 ansible_user=ansible_user
+
+[jenkins]
+193.124.117.94
