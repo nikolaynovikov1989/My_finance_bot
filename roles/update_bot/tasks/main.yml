@@ -27,3 +27,5 @@
     - expenses.py
     - main.py
     - server.py
+- name: run app
+  shell: "nohup python3 server.py &"
