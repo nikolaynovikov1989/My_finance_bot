@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('copy') {
             steps {
-                ansiblePlaybook credentialsId: 'gitcred', disableHostKeyChecking: true, inventory: 'hosts', playbook: 'playbook.yml'
+              ansiblePlaybook playbook: 'playbook.yml', inventory: 'hosts', credentialsId: 'gitcred'
             }
         }
     }
