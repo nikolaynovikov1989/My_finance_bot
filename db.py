@@ -28,6 +28,15 @@ def month():
     res = cur.execute("SELECT SUM(amount) from expense where created like ?", ('%'+str(month)+'%',))
     base_result = res.fetchone()
     return (base_result[0])
+def month_category():
+    con = sqlite3.connect("db.db")
+    cur = con.cursor()
+    dt_now = date.today()
+    month = str(dt_now)[:7]
+    res = cur.execute("SELECT amount, category_codename from expense where created like ?", ('%' + str(month) + '%',))
+    base_result = res.fetchall()
+    for i in base_result:
+     return (i)
 
 def get_today():
     con = sqlite3.connect("db.db")

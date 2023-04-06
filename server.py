@@ -3,7 +3,7 @@ import logging
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
-from db import add_expense,get_expense,get_today,month
+from db import add_expense,get_expense,get_today,month,month_category
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
@@ -14,7 +14,7 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=['start', 'help', 'test'])
+@dp.message_handler(commands=['month', 'month_category', 'today',])
 async def send_welcome(message: types.Message):
     """
     This handler will be called when user sends `/start` or `/help` command
@@ -27,7 +27,12 @@ async def echo(message: types.Message):
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month()
     await message.answer(answer_message)
-
+@dp.message_handler(commands=['month_category'])
+async def echo(message: types.Message):
+    # old style:
+    # await bot.send_message(message.chat.id, message.text)
+    answer_message = month_category()
+    await message.answer(answer_message)
 
 @dp.message_handler(commands=['today'])
 async def echo(message: types.Message):
