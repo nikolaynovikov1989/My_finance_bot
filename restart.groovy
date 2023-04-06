@@ -6,7 +6,7 @@ pipeline {
                 ansiblePlaybook(
                 credentialsId: 'gitcred',
                 vaultCredentialsId: 'vault1',
-                disableHostKeyChecking: true,
+                disableHostKeyChecking: 'true',
                 inventory: 'hosts',
                 playbook: 'playbook_restart.yml',
                 extras: '-e role="$role"')
