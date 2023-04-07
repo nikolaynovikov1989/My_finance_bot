@@ -50,9 +50,12 @@ async def add(message: types.Message):
     text = message.text
     vars = text.split(" ")
     aliases_name = vars[1]
-    res = cur.execute("SELECT codename from category where aliases like ?", ('%' + aliases_name + '%',))
-    base_result = res.fetchone()
-    codename = base_result[0]
+    try:
+        res = cur.execute("SELECT codename from category where aliases like ?", ('%' + aliases_name + '%',))
+        base_result = res.fetchone()
+        codename = base_result[0]
+    except:
+        codename = "other"
     add_expense(vars[0], datetime.datetime.now(), codename, message.text)
     await message.answer("Данные записаны в бд")
 

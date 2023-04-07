@@ -1,12 +1,18 @@
 import sqlite3
-from datetime import date
-cash = []
 con = sqlite3.connect("db.db")
 cur = con.cursor()
-dt_now = date.today()
-month = str(dt_now)[:7]
-res = cur.execute("SELECT amount, category_codename from expense where created like ?", ('%' + str(month) + '%',))
-base_result = res.fetchall()
-for i in base_result:
-    cash.append(i)
-print(cash)
+text = "100 газировка"
+vars = text.split(" ")
+aliases_name = vars[1]
+try:
+ res = cur.execute("SELECT codename from category where aliases like ?", ('%' + aliases_name + '%',))
+ base_result = res.fetchone()
+ codename = base_result[0]
+ print(codename)
+except:
+    codename = "other"
+    print(codename)
+
+
+
+# add_expense(vars[0], datetime.datetime.now(), codename, message.text)
