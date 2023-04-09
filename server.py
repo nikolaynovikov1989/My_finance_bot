@@ -27,13 +27,6 @@ async def echo(message: types.Message):
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month()
     await message.answer(answer_message)
-@dp.message_handler(commands=['month_category'])
-async def echo(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-    answer_message = month_category()
-    for i in answer_message:
-     await message.answer(i)
 
 @dp.message_handler(commands=['today'])
 async def echo(message: types.Message):
