@@ -3,7 +3,7 @@ import logging
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
-from db import add_expense,get_expense,get_today,month,month_category
+from db import add_expense,get_today,month
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
