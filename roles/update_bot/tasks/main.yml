@@ -8,7 +8,6 @@
     - createdb.sql
     - db.py
     - expenses.py
-    - main.py
     - server.py
 - name: start service bot
   service: name=test state=started
