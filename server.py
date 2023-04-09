@@ -27,13 +27,6 @@ async def echo(message: types.Message):
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month()
     await message.answer(answer_message)
-@dp.message_handler(commands=['month_category'])
-async def echo(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-    answer_message = month_category()
-    for i in answer_message:
-     await message.answer(i)
 
 @dp.message_handler(commands=['today'])
 async def echo(message: types.Message):
@@ -50,9 +43,12 @@ async def add(message: types.Message):
     text = message.text
     vars = text.split(" ")
     aliases_name = vars[1]
-    res = cur.execute("SELECT codename from category where aliases like ?", ('%' + aliases_name + '%',))
-    base_result = res.fetchone()
-    codename = base_result[0]
+    try:
+        res = cur.execute("SELECT codename from category where aliases like ?", ('%' + aliases_name + '%',))
+        base_result = res.fetchone()
+        codename = base_result[0]
+    except:
+        codename = "other"
     add_expense(vars[0], datetime.datetime.now(), codename, message.text)
     await message.answer("Данные записаны в бд")
 

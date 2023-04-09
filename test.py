@@ -1,5 +1,6 @@
 import sqlite3
 from datetime import date
+
 cash = []
 con = sqlite3.connect("db.db")
 cur = con.cursor()
@@ -9,4 +10,7 @@ res = cur.execute("SELECT amount, category_codename from expense where created l
 base_result = res.fetchall()
 for i in base_result:
     cash.append(i)
-print(cash)
+
+answer_message = cash
+for i in answer_message:
+    print(i)
