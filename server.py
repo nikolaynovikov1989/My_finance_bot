@@ -2,7 +2,7 @@ import logging
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
-from db import add_expense, get_today, month, delete_expense
+from db import add_expense, get_today, month, delete_expense, month_category
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
@@ -29,7 +29,14 @@ async def echo(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month()
-    await message.answer(answer_message)
+    await message.answer("Потрачено в текущем месяце: " + str(answer_message))
+
+@dp.message_handler(commands=['month_category'])
+async def echo(message: types.Message):
+    # old style:
+    # await bot.send_message(message.chat.id, message.text)
+    answer_message = month_category()
+    await message.answer("Потрачено в текущем месяце: " + str(answer_message))
 
 
 @dp.message_handler(commands=['today'])
