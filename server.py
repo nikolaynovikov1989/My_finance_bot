@@ -2,7 +2,7 @@ import logging
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
-from db import add_expense, get_today, month, delete_expense, month_category
+from db import add_expense, today_category, month, delete_expense, month_category
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
@@ -19,33 +19,47 @@ async def send_welcome(message: types.Message):
         "Бот для учета финансов\n\n"
         "Добавить рассход 100 такси\n"
         "Статистика трат за месяц /month\n"
-        "Статистика трат за день /today\n"
+        "Статистика трат за месяц по категориям /month_category\n"
+        "Статистика трат за день по категориям /today\n"
         "Удалить последнюю запись /delete\n"
     )
 
 
 @dp.message_handler(commands=['month'])
-async def echo(message: types.Message):
+async def echo_month(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month()
     await message.answer("Потрачено в текущем месяце: " + str(answer_message))
 
-@dp.message_handler(commands=['month_category'])
-async def monthca(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-    answer_message = month_category()
-    await message.answer("Потрачено в текущем месяце: " + str(answer_message))
+# @dp.message_handler(commands=['month_category'])
+# async def monthca(message: types.Message):
+#     # old style:
+#     # await bot.send_message(message.chat.id, message.text)
+#     answer_message = month_category()
+#     await message.answer("Потрачено в текущем месяце: " + str(answer_message))
 
 
 @dp.message_handler(commands=['today'])
-async def echo(message: types.Message):
+async def echo_today(message: types.Message):
     try:
-        answer_message = get_today()
+        answer_message = today_category()
+        for i in answer_message:
+            await message.answer(i)
     except:
         answer_message = "Еще нет трат за сегодня"
-    await message.answer(answer_message)
+        await message.answer(answer_message)
+
+
+@dp.message_handler(commands=['month_category'])
+async def echo_month_category(message: types.Message):
+    # old style:
+    # await bot.send_message(message.chat.id, message.text)
+    answer_message = month_category()
+    for i in answer_message:
+     await message.answer(i)
+
+
 
 @dp.message_handler(lambda message: message.text.startswith('/del'))
 async def del_expense(message: types.Message):
