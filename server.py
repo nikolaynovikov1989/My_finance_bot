@@ -32,7 +32,7 @@ async def echo(message: types.Message):
     await message.answer("Потрачено в текущем месяце: " + str(answer_message))
 
 @dp.message_handler(commands=['month_category'])
-async def echo(message: types.Message):
+async def monthca(message: types.Message):
     # old style:
     # await bot.send_message(message.chat.id, message.text)
     answer_message = month_category()
