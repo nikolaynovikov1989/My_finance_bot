@@ -1,16 +1,12 @@
 import sqlite3
 from datetime import date
 
-cash = []
-con = sqlite3.connect("db.db")
-cur = con.cursor()
-dt_now = date.today()
-month = str(dt_now)[:7]
-res = cur.execute("SELECT amount, category_codename from expense where created like ?", ('%' + str(month) + '%',))
-base_result = res.fetchall()
-for i in base_result:
-    cash.append(i)
+def get_today():
+    con = sqlite3.connect("db.db")
+    cur = con.cursor()
+    dt_now = date.today()
+    res = cur.execute("SELECT SUM(amount) from expense where created like ?", ('%'+str(dt_now)+'%',))
+    base_result = res.fetchone()
+    print(base_result[0])
 
-answer_message = cash
-for i in answer_message:
-    print(i)
+get_today()

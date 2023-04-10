@@ -1,9 +1,8 @@
-#Сюда добавляем логику работы бота фнукции по добавлению удалению рассхода
 import logging
 import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
-from db import add_expense,get_today,month
+from db import add_expense, get_today, month, delete
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
@@ -14,12 +13,16 @@ bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 
-@dp.message_handler(commands=['help'])
+@dp.message_handler(commands=['help', 'start'])
 async def send_welcome(message: types.Message):
-    """
-    This handler will be called when user sends `/start` or `/help` command
-    """
-    await message.reply("Hi!\nI'm EchoBot!\nPowered by aiogram.")
+    await message.answer(
+        "Бот для учета финансов\n\n"
+        "Добавить рассход 100 такси\n"
+        "Статистика трат за месяц /month\n"
+        "Статистика трат за день /today\n"
+        "Удалить последнюю запись /delete\n"
+    )
+
 
 @dp.message_handler(commands=['month'])
 async def echo(message: types.Message):
@@ -28,10 +31,9 @@ async def echo(message: types.Message):
     answer_message = month()
     await message.answer(answer_message)
 
+
 @dp.message_handler(commands=['today'])
 async def echo(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
     answer_message = get_today()
     await message.answer(answer_message)
 
@@ -52,7 +54,10 @@ async def add(message: types.Message):
     add_expense(vars[0], datetime.datetime.now(), codename, message.text)
     await message.answer("Данные записаны в бд")
 
-
+@dp.message_handler(commands=['delete'])
+async def echo(message: types.Message):
+    delete()
+    await message.answer("Запись удалена")
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
