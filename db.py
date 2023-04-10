@@ -37,7 +37,7 @@ def get_today():
     return (base_result[0])
 
 
-def delete():
+def delete_expense():
     con = sqlite3.connect("db.db")
     cur = con.cursor()
     cur.execute("DELETE from expense where id = (SELECT max(id) FROM expense)")
