@@ -3,6 +3,7 @@ import sqlite3
 from aiogram import Bot, Dispatcher, executor, types
 import datetime
 from db import add_expense, today_category, month, delete_expense, month_category
+from middleware import AccessMiddleware
 
 API_TOKEN = '5816921578:AAH4KNQE0e-et7sUAoHZEbUOVP-IAXVXHrk'
 # Configure logging
@@ -11,7 +12,8 @@ logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
-
+ACCESS_ID = 602404694
+dp.middleware.setup(AccessMiddleware(ACCESS_ID))
 
 @dp.message_handler(commands=['help', 'start'])
 async def send_welcome(message: types.Message):
