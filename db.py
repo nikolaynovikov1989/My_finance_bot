@@ -2,9 +2,11 @@ import sqlite3
 import datetime
 from datetime import date
 
+
 def con_cursor():
     con = sqlite3.connect("db.db")
     cur = con.cursor()
+
 
 def add_expense(amount, created, category_codename, raw_text):
     con = sqlite3.connect("db.db")
@@ -14,6 +16,8 @@ def add_expense(amount, created, category_codename, raw_text):
     data = (amount, created, category_codename, raw_text)
     res = cur.execute(sql_insert, data)
     con.commit()
+
+
 def month():
     con = sqlite3.connect("db.db")
     cur = con.cursor()
@@ -23,6 +27,7 @@ def month():
     base_result = res.fetchone()
     return (base_result[0])
 
+
 def get_today():
     con = sqlite3.connect("db.db")
     cur = con.cursor()
@@ -30,3 +35,10 @@ def get_today():
     res = cur.execute("SELECT SUM(amount) from expense where created like ?", ('%'+str(dt_now)+'%',))
     base_result = res.fetchone()
     return (base_result[0])
+
+
+def delete():
+    con = sqlite3.connect("db.db")
+    cur = con.cursor()
+    cur.execute("DELETE from expense where id = (SELECT max(id) FROM expense)")
+    con.commit()
