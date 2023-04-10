@@ -20,7 +20,7 @@ async def send_welcome(message: types.Message):
         "Добавить рассход 100 такси\n"
         "Статистика трат за месяц /month\n"
         "Статистика трат за день /today\n"
-        "Удалить последнюю запись /del\n"
+        "Удалить последнюю запись /delete\n"
     )
 
 
@@ -34,9 +34,16 @@ async def echo(message: types.Message):
 
 @dp.message_handler(commands=['today'])
 async def echo(message: types.Message):
-    answer_message = get_today()
+    try:
+        answer_message = get_today()
+    except:
+        answer_message = "Еще нет трат за сегодня"
     await message.answer(answer_message)
 
+@dp.message_handler(lambda message: message.text.startswith('/del'))
+async def del_expense(message: types.Message):
+    delete_expense()
+    await message.answer("Запись удалена")
 
 @dp.message_handler()
 async def add(message: types.Message):
@@ -54,10 +61,7 @@ async def add(message: types.Message):
     add_expense(vars[0], datetime.datetime.now(), codename, message.text)
     await message.answer("Данные записаны в бд")
 
-@dp.message_handler(lambda message: message.text.startswith('/del'))
-async def del_expense(message: types.Message):
-    delete_expense()
-    await message.answer("Запись удалена")
+
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
