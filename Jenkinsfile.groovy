@@ -8,7 +8,7 @@ pipeline {
         }
         stage('Start_Bot') {
             steps {
-                build job: '/job/restart/configure', parameters: [[$class: 'StringParameterValue', name: 'role', value: start]]
+                build job: 'restart', parameters: [[$class: 'StringParameterValue', name: 'role', value: start]]
 }
     }
 }
