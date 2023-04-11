@@ -20,9 +20,10 @@ async def send_welcome(message: types.Message):
     await message.answer(
         "Бот для учета финансов\n\n"
         "Добавить рассход 100 такси\n"
-        "Статистика трат за месяц /month\n"
-        "Статистика трат за месяц по категориям /month_category\n"
-        "Статистика трат за день по категориям /today\n"
+        "Остаток денег для трат в текущем месяце /cash\n"
+        "Статистика без базовых трат за месяц /month\n"
+        "Статистика без базовых трат за месяц по категориям /month_category\n"
+        "Статистика без базовых трат за день по категориям /today\n"
         "Удалить последнюю запись /delete\n"
     )
 
@@ -34,14 +35,10 @@ async def echo_month(message: types.Message):
     answer_message = month()
     await message.answer("Потрачено в текущем месяце: " + str(answer_message))
 
-# @dp.message_handler(commands=['month_category'])
-# async def monthca(message: types.Message):
-#     # old style:
-#     # await bot.send_message(message.chat.id, message.text)
-#     answer_message = month_category()
-#     await message.answer("Потрачено в текущем месяце: " + str(answer_message))
-
-
+@dp.message_handler(commands=['cash'])
+async def echo_cash(message: types.Message):
+    answer_message = int(15000) - int(month())
+    await message.answer("Остаток денег в текущем месяце для трат: " + str(answer_message))
 @dp.message_handler(commands=['today'])
 async def echo_today(message: types.Message):
     try:
@@ -55,18 +52,16 @@ async def echo_today(message: types.Message):
 
 @dp.message_handler(commands=['month_category'])
 async def echo_month_category(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
     answer_message = month_category()
     for i in answer_message:
      await message.answer(i)
-
 
 
 @dp.message_handler(lambda message: message.text.startswith('/del'))
 async def del_expense(message: types.Message):
     delete_expense()
     await message.answer("Запись удалена")
+
 
 @dp.message_handler()
 async def add(message: types.Message):
@@ -83,7 +78,6 @@ async def add(message: types.Message):
         codename = "other"
     add_expense(vars[0], datetime.datetime.now(), codename, message.text)
     await message.answer("Данные записаны в бд")
-
 
 
 if __name__ == '__main__':
