@@ -22,7 +22,6 @@ async def send_welcome(message: types.Message):
         "Добавить рассход 100 такси\n"
         "Остаток денег для трат в текущем месяце /cash\n"
         "Статистика без базовых трат за месяц /month\n"
-        "Статистика без базовых трат за месяц по категориям /month_category\n"
         "Статистика без базовых трат за день по категориям /today\n"
         "Удалить последнюю запись /delete\n"
     )
@@ -30,15 +29,19 @@ async def send_welcome(message: types.Message):
 
 @dp.message_handler(commands=['month'])
 async def echo_month(message: types.Message):
-    # old style:
-    # await bot.send_message(message.chat.id, message.text)
-    answer_message = month()
-    await message.answer("Потрачено в текущем месяце: " + str(answer_message))
+    answer_message1 = month()
+    answer_message2 = month_category()
+    await message.answer("Потрачено в текущем месяце: " + str(answer_message1))
+    for i in answer_message2:
+     await message.answer(i)
+
 
 @dp.message_handler(commands=['cash'])
 async def echo_cash(message: types.Message):
     answer_message = int(15000) - int(month())
     await message.answer("Остаток денег в текущем месяце для трат: " + str(answer_message))
+
+
 @dp.message_handler(commands=['today'])
 async def echo_today(message: types.Message):
     try:
@@ -48,13 +51,6 @@ async def echo_today(message: types.Message):
     except:
         answer_message = "Еще нет трат за сегодня"
         await message.answer(answer_message)
-
-
-@dp.message_handler(commands=['month_category'])
-async def echo_month_category(message: types.Message):
-    answer_message = month_category()
-    for i in answer_message:
-     await message.answer(i)
 
 
 @dp.message_handler(lambda message: message.text.startswith('/del'))
