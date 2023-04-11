@@ -1,5 +1,3 @@
-- name: stop service bot
-  service: name=test state=stopped
 - name: copy files to server
   copy:
     src: '{{item}}'
@@ -10,6 +8,3 @@
     - expenses.py
     - server.py
     - middleware.py
-- name: start service bot
-  service: name=test state=started
-#web
