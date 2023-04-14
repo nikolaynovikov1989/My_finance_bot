@@ -3,7 +3,7 @@ import datetime
 from datetime import date
 
 def month():
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     dt_now = date.today()
     month = str(dt_now)[:7]

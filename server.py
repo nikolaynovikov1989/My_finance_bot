@@ -61,7 +61,7 @@ async def del_expense(message: types.Message):
 
 @dp.message_handler()
 async def add(message: types.Message):
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     text = message.text
     vars = text.split(" ")

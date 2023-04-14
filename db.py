@@ -4,12 +4,12 @@ from datetime import date
 
 
 def con_cursor():
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
 
 
 def add_expense(amount, created, category_codename, raw_text):
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     sql_insert = """insert into expense(amount,created,category_codename,raw_text) 
                  values(?, ?, ?, ?);"""
@@ -19,7 +19,7 @@ def add_expense(amount, created, category_codename, raw_text):
 
 
 def month():
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     dt_now = date.today()
     month = str(dt_now)[:7]
@@ -34,7 +34,7 @@ def month():
 
 def month_category():
     cash = []
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     dt_now = date.today()
     month = str(dt_now)[:7]
@@ -52,7 +52,7 @@ def month_category():
 
 def today_category():
     cash = []
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     dt_now = date.today()
     res = cur.execute(
@@ -67,7 +67,7 @@ def today_category():
     return (cash)
 
 def delete_expense():
-    con = sqlite3.connect("db.db")
+    con = sqlite3.connect("db/db.db")
     cur = con.cursor()
     cur.execute("DELETE from expense where id = (SELECT max(id) FROM expense)")
     con.commit()
